@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>VIALIX PSICOTEST</title>
+<meta name="theme-color" content="#0B6E4F">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-logo">🧠 VIALIX <span>PSICOTEST</span></div>
+  <a id="btn-volver-key" class="topbar-link hidden" href="#">🔑 VIALIX KEY</a>
+</header>
+
+<div class="brand-bar">
+  <img src="logo-vialix.png" alt="VIALIX - Inteligencia vial corporativa" class="brand-logo">
+  <span class="brand-separador"></span>
+  <img src="logo-arl-bolivar.png" alt="Seguros Bolívar ARL" class="brand-logo brand-logo-arl">
+</div>
+
+<main id="app">
+
+  <!-- Identificación -->
+  <section id="view-usuario" class="view">
+    <div class="card">
+      <h1>Pruebas psicomotrices</h1>
+      <p>Tres pruebas cortas en la pantalla del celular: reacción, coordinación de las dos manos y anticipación de la velocidad.</p>
+      <label class="campo">Nombre completo
+        <input type="text" id="input-nombre" autocomplete="name" placeholder="Nombre completo">
+      </label>
+      <label class="campo">Número de identificación (cédula)
+        <input type="text" id="input-identificacion" inputmode="numeric" placeholder="Ej: 1234567890">
+      </label>
+      <label class="campo">Placa del vehículo (opcional)
+        <input type="text" id="input-placa" maxlength="10" placeholder="Ej: ABC123" style="text-transform:uppercase">
+      </label>
+      <button type="button" id="btn-guardar-usuario" class="btn-primario">Continuar</button>
+    </div>
+  </section>
+
+  <!-- Menú de pruebas -->
+  <section id="view-home" class="view">
+    <div class="card home-card">
+      <p class="etiqueta">Persona evaluada</p>
+      <p class="valor" id="home-nombre">--</p>
+      <p class="etiqueta">Identificación · Placa</p>
+      <p class="valor" id="home-detalle">--</p>
+      <button type="button" id="btn-cambiar-usuario" class="btn-link">Cambiar persona</button>
+    </div>
+
+    <div class="aviso">
+      <strong>Antes de empezar:</strong> siéntate, quita las fundas gruesas o anillos que estorben, sube el brillo y silencia las notificaciones. Hazlas en orden y sin prisa.
+    </div>
+
+    <div id="lista-pruebas"></div>
+
+    <button type="button" id="btn-resumen" class="btn-accion btn-azul">
+      <span class="btn-accion-icono">📋</span>
+      <span>Ver resumen de resultados</span>
+    </button>
+
+    <div id="cola-info" class="cola-info hidden"></div>
+  </section>
+
+  <!-- Instrucciones de una prueba -->
+  <section id="view-instrucciones" class="view">
+    <div class="card">
+      <h1 id="instr-titulo">--</h1>
+      <ol id="instr-lista" class="instr-lista"></ol>
+      <p id="instr-horizontal" class="aviso hidden">📱↔️ Esta prueba se hace con el celular en <strong>horizontal</strong>.</p>
+      <button type="button" id="btn-comenzar" class="btn-primario">Comenzar</button>
+      <button type="button" id="btn-volver-instr" class="btn-link">← Volver</button>
+    </div>
+  </section>
+
+  <!-- Resultado de una prueba -->
+  <section id="view-resultado" class="view">
+    <div class="card">
+      <h1 id="res-titulo">--</h1>
+      <div id="res-nivel" class="nivel">--</div>
+      <div id="res-tabla" class="res-tabla"></div>
+      <p id="res-envio" class="estado-envio">--</p>
+      <button type="button" id="btn-repetir" class="btn-secundario">↻ Repetir esta prueba</button>
+      <button type="button" id="btn-siguiente" class="btn-primario">Siguiente prueba</button>
+      <button type="button" id="btn-res-home" class="btn-link">← Volver al menú</button>
+    </div>
+  </section>
+
+  <!-- Resumen -->
+  <section id="view-resumen" class="view">
+    <div class="card">
+      <h1>Resumen de resultados</h1>
+      <p id="resumen-persona" class="texto-suave">--</p>
+      <div id="resumen-contenido"></div>
+      <p class="texto-suave">Estas pruebas son un tamizaje de entrenamiento: no reemplazan el examen de aptitud de un Centro de Reconocimiento de Conductores (CRC).</p>
+      <button type="button" id="btn-resumen-home" class="btn-link">← Volver al menú</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- Área de la prueba a pantalla completa -->
+<div id="arena" class="arena hidden">
+  <canvas id="lienzo"></canvas>
+  <button type="button" id="btn-salir-prueba" class="arena-salir" aria-label="Salir de la prueba">✕</button>
+  <div id="arena-cuenta" class="arena-cuenta hidden">3</div>
+</div>
+
+<script src="config.js"></script>
+<script src="pruebas.js"></script>
+<script src="app.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
+  }
+</script>
+</body>
+</html>
